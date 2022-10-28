@@ -4,6 +4,9 @@ from .models import Study, Work, Project, Article
 from django.core.mail import EmailMessage
 # Create your views here.
 
+def success(request):
+    return render(request, 'core/success.html')
+
 def home(request):
     studies = Study.objects.all().order_by('-end')
     jobs = Work.objects.all().order_by('end')
@@ -36,8 +39,8 @@ def home(request):
                 )
             mail_envio.content_subtype = 'html'
             mail_envio.send()
-            return redirect(request.META['HTTP_REFERER'])
-
+            return redirect(success)
+            
     return render(
         request, 
         'core/index.html', 
